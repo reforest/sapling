@@ -39,9 +39,31 @@ Scene.prototype.light = function light() {
   var shadowlight = new THREE.DirectionalLight( 0xffffff, 0.5 );
   shadowlight.position.set( 0, 50, 0 );
   shadowlight.castShadow = true;
+  shadowlight.shadow.mapSize.width = 512;  // default
+  shadowlight.shadow.mapSize.height = 512; // default
+  shadowlight.shadow.camera.near = 0.5;       // default
+  shadowlight.shadow.camera.far = 5000;      // default
+
+    shadowlight.shadowCameraVisible = true;
+
+    
+    shadowlight.shadowMapWidth = 512;
+    shadowlight.shadowMapHeight = 512;
+
+    var d = 200;
+
+    shadowlight.shadowCameraLeft = -d;
+    shadowlight.shadowCameraRight = d;
+    shadowlight.shadowCameraTop = d;
+    shadowlight.shadowCameraBottom = -d;
+
+    shadowlight.shadowCameraFar = 1000;
+    shadowlight.shadowDarkness = 0.2;
+
+
   this.scene.add(shadowlight);
 
-  var light = new THREE.DirectionalLight( 0xffffff, 1 );
+  var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
   light.position.set( 60, 100, 20 );
   this.scene.add(light);
   
@@ -51,8 +73,8 @@ Scene.prototype.light = function light() {
 };
 
 Scene.prototype.floor = function floor() {
-  var geometry = new THREE.PlaneGeometry( 5000, 5000, 1, 1 );
-  var material = new THREE.MeshBasicMaterial( { color: 0xE1A95F } );
+  var geometry = new THREE.PlaneBufferGeometry( 5000, 5000, 1, 1 );
+  var material = new THREE.MeshStandardMaterial( { color: 0x202020 } );
   this.floor = new THREE.Mesh( geometry, material );
   this.floor.material.side = THREE.DoubleSide;
   this.floor.position.y =-150;
