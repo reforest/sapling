@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/reforest/sapling#readme",
   "devDependencies": {
-    "three.js": "^0.77.1",
+    "three": "^0.91.0",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.2"
