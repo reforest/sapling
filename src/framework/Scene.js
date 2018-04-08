@@ -28,11 +28,11 @@ Scene.prototype.camera = function camera() {
 
 Scene.prototype.renderer = function renderer() {
   this.renderer = new THREE.WebGLRenderer({antialias: true});
-  this.renderer.setSize( window.innerWidth, window.innerHeight );
+  this.renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
   this.renderer.setClearColor( 0x202020 , 1 );
   this.renderer.shadowMap.enabled = true;
   this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  document.body.appendChild(this.renderer.domElement);
+  document.getElementById("canvas").appendChild(this.renderer.domElement); // set this to whatever you prefer
 };
 
 Scene.prototype.light = function light() {
@@ -74,7 +74,7 @@ Scene.prototype.light = function light() {
 
 Scene.prototype.floor = function floor() {
   var geometry = new THREE.PlaneBufferGeometry( 5000, 5000, 1, 1 );
-  var material = new THREE.MeshStandardMaterial( { color: 0x202020 } );
+  var material = new THREE.MeshStandardMaterial( { color: 0x483C32 } );
   this.floor = new THREE.Mesh( geometry, material );
   this.floor.material.side = THREE.DoubleSide;
   this.floor.position.y =-150;

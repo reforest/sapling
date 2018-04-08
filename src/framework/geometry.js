@@ -1,6 +1,4 @@
 const THREE = require('three');
-const {materials} = require('./materials.js');
-
 
 let geometry = {};
 
