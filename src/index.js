@@ -2,10 +2,10 @@ const { Scene } = require('./framework/Scene.js');
 const THREE = require('three');
 const { createShape , hashTree, makeAcre } = require('./framework/constructors.js');
 
-//import the setup from stage.js
+//import the threeJS setup
 let scene = new Scene();
 
-// creates the group which is added to the scene
+// for scene initiation
 let group = new THREE.Group();
 
 let input = document.getElementById("hashInput");

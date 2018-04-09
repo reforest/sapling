@@ -17,7 +17,7 @@ const hashTree = (hash) => {
 	let range = (parseInt(hash) / (100**30)).toString().slice(0,20); // returns a 20 digit string
 
 	let posY = 100 //parseInt(range.slice(0,4));
-	let wd = 100 + parseInt(range.slice(4,8)/100);
+	let wd = 100 + parseInt(range.slice(4,8)/150);
 	let h = 100 + parseInt(range.slice(8,12)/100);
 
 	console.log("wd = " + wd);
