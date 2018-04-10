@@ -1,38 +1,35 @@
 const THREE = require('three');
 
-function Scene() {
-  this.shapeX = 0.5;
-  this.shapeY = 100;
-  this.shapeZ = 100;
-  this.shapeColor = 0xffffff;
+function Scene(settings) {
+  this.settings = settings;
 }
 
 Scene.prototype.init = function init(group) {
   this.scene = new THREE.Scene();
-  this.camera();
-  this.renderer();
+  this.camera(this.settings.cameraDistance);
+  this.renderer(this.settings.antiAliasing, this.settings.appendToDomElementId);
   this.light();
-  this.floor();
+  this.floor(this.settings.floorColor, this.settings.floorShadow);
   this.scene.add(group);
   this.render();
 };
 
-Scene.prototype.camera = function camera() {
+Scene.prototype.camera = function camera(cameraDistance) {
   this.camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 5000 );
-  this.camera.position.y = 1000;
-  this.camera.position.z = 1000;
-  this.camera.position.x = 1000;
+  this.camera.position.y = cameraDistance;
+  this.camera.position.z = cameraDistance;
+  this.camera.position.x = cameraDistance;
   this.camera.updateProjectionMatrix();
   this.camera.lookAt(this.scene.position);
 };
 
-Scene.prototype.renderer = function renderer() {
-  this.renderer = new THREE.WebGLRenderer({antialias: true});
+Scene.prototype.renderer = function renderer(antiAliasing, elementId) {
+  this.renderer = new THREE.WebGLRenderer({antialias: antiAliasing});
   this.renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
   this.renderer.setClearColor( 0x202020 , 1 );
   this.renderer.shadowMap.enabled = true;
   this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  document.getElementById("canvas").appendChild(this.renderer.domElement); // set this to whatever you prefer
+  document.getElementById(elementId).appendChild(this.renderer.domElement);
 };
 
 Scene.prototype.light = function light() {
@@ -44,21 +41,21 @@ Scene.prototype.light = function light() {
   shadowlight.shadow.camera.near = 0.5;       // default
   shadowlight.shadow.camera.far = 5000;      // default
 
-    shadowlight.shadowCameraVisible = true;
+  shadowlight.shadowCameraVisible = true;
 
-    
-    shadowlight.shadowMapWidth = 512;
-    shadowlight.shadowMapHeight = 512;
+  
+  shadowlight.shadowMapWidth = 512;
+  shadowlight.shadowMapHeight = 512;
 
-    var d = 200;
+  var d = 200;
 
-    shadowlight.shadowCameraLeft = -d;
-    shadowlight.shadowCameraRight = d;
-    shadowlight.shadowCameraTop = d;
-    shadowlight.shadowCameraBottom = -d;
+  shadowlight.shadowCameraLeft = -d;
+  shadowlight.shadowCameraRight = d;
+  shadowlight.shadowCameraTop = d;
+  shadowlight.shadowCameraBottom = -d;
 
-    shadowlight.shadowCameraFar = 1000;
-    shadowlight.shadowDarkness = 0.2;
+  shadowlight.shadowCameraFar = 1000;
+  shadowlight.shadowDarkness = 0.2;
 
 
   this.scene.add(shadowlight);
@@ -72,9 +69,9 @@ Scene.prototype.light = function light() {
   this.scene.add(backLight);
 };
 
-Scene.prototype.floor = function floor() {
+Scene.prototype.floor = function floor(floorColor, floorShadow) {
   var geometry = new THREE.PlaneBufferGeometry( 5000, 5000, 1, 1 );
-  var material = new THREE.MeshStandardMaterial( { color: 0x483C32 } );
+  var material = new THREE.MeshStandardMaterial( { color: floorColor } );
   this.floor = new THREE.Mesh( geometry, material );
   this.floor.material.side = THREE.DoubleSide;
   this.floor.position.y =-150;
@@ -82,7 +79,7 @@ Scene.prototype.floor = function floor() {
   this.floor.rotation.y = 0;
   this.floor.rotation.z = 0;
   this.floor.doubleSided = true;
-  this.floor.receiveShadow = true;
+  this.floor.receiveShadow = floorShadow;
   this.scene.add(this.floor);
 };
 
@@ -91,4 +88,4 @@ Scene.prototype.render = function render() {
   this.renderer.render(this.scene, this.camera);
 };
 
-module.exports = {Scene : Scene};
+module.exports = { Scene : Scene };

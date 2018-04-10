@@ -1,9 +1,19 @@
 const { Scene } = require('./framework/Scene.js');
 const THREE = require('three');
-const { createShape , hashTree, makeAcre } = require('./framework/constructors.js');
+const { createShape } = require('./framework/constructors.js');
+
+// choose your scene settings
+const settings = {
+	cameraDistance: 1000,	// how far from the elements
+	antiAliasing: true,	// false for low perfoming graphics cards
+	backgroundColor: 0x202020,	// use hexadecimal
+	floorColor: 0x483c32,
+	floorShadow: true,	// true if you want shadows to be cast on the floor
+	appendToDomElementId: "canvas" // the destination of the threeJS scene in the DOM
+};
 
 //import the threeJS setup
-let scene = new Scene();
+let scene = new Scene(settings);
 
 // for scene initiation
 let group = new THREE.Group();
@@ -13,19 +23,19 @@ console.log(input.value);
 
 let canvas = document.getElementById("canvas");
 
-canvas.addEventListener("click", () => {
-	let canvas = document.getElementById("canvas");
-	canvas.innerHTML = "";
-	let scene = new Scene();
-	group.add(hashTree(input.value));
-	console.log(input.value);
-	scene.init(group);
+input.addEventListener("keydown", (e) => {
+
+	if (e.code === "Enter") {
+		let canvas = document.getElementById("canvas");
+		canvas.innerHTML = "";
+		let scene = new Scene(settings);
+		group.add(hashTree(input.value));
+		console.log(input.value);
+		scene.init(group);
+	}
+
 })
 
-/*
-//make a 10x10 acre
-//group.add(makeAcre(10,10));
-*/
-
-//group.add(hashTree(input.placeholder));
 scene.init(group);
+
+
