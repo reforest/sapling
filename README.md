@@ -12,7 +12,7 @@ Click the canvas to create a tree
 TBD
 
 ## Author
-[reforest(Nuno Neves)](https://github.com/reforest)
+[reforest (Nuno Neves)](https://github.com/reforest)
 
 ## Resources
 - [threejs](https://threejs.org/)
